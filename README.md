@@ -1,59 +1,192 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SaaS-Share
+
+**Plateforme SaaS multi-tenant** — espaces de travail isolés, partage de fichiers et chat d'équipe en temps réel.
+
+[![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php&logoColor=white)](https://php.net)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## Aperçu
+
+SaaS-Share permet à chaque entreprise de disposer de son **propre espace de travail** (tenant) totalement isolé. Les utilisateurs peuvent :
+
+- **Créer** un espace et inviter leur équipe via un code unique
+- **Rejoindre** un espace existant avec ce code
+- **Partager des fichiers** au sein de l'équipe
+- **Communiquer** via un chat d'espace (rafraîchissement automatique)
+- Gérer un modèle **Free / Premium** (limite d'upload simulée)
+
+> Idéal pour démontrer une architecture SaaS complète : authentification, multi-tenant, dashboard, stockage et monétisation freemium.
+
+---
+
+## Fonctionnalités
+
+| Module | Description |
+|--------|-------------|
+| **Multi-tenant** | Chaque workspace est isolé (fichiers, chat, membres) |
+| **Inscription** | Créer une entreprise ou rejoindre une équipe par code |
+| **Fichiers** | Upload, téléchargement, tri (nom, date, taille) |
+| **Chat** | Messagerie d'équipe avec rafraîchissement auto (3 s) |
+| **Plans** | Free : 3 fichiers/compte · Premium : upload illimité |
+| **Paramètres** | Drawer latéral — pseudo, plan, membres, aide intégrée |
+
+---
+
+## Architecture
+
+```mermaid
+flowchart LR
+    U[Utilisateur] --> A[Auth Laravel]
+    A --> W[Workspace / Tenant]
+    W --> F[Fichiers partagés]
+    W --> C[Chat d'équipe]
+    W --> M[Membres]
+    W --> P[Plan Free / Premium]
+```
+
+**Stack technique**
+
+- **Backend** — Laravel 12, PHP 8.2
+- **Frontend** — Blade + Tailwind CSS (CDN)
+- **Base de données** — SQLite (local) / PostgreSQL (production Render)
+- **Déploiement** — Docker + Render
+
+---
+
+## Démo en ligne
+
+> Remplacez l'URL ci-dessous par votre lien Render.
+
+**[https://votre-app.onrender.com](https://votre-app.onrender.com)**
+
+---
+
+## Scénario de démo (10 min)
+
+| Étape | Persona | Action | Résultat attendu |
+|-------|---------|--------|------------------|
+| 1 | **Jean** | Crée l'espace `Alpha` → upload 1 fichier | Code généré (ex. `ALPHA1`) |
+| 2 | **Lili** | Rejoint `ALPHA1` → télécharge + chat | Collaboration sur le même espace |
+| 3 | **Sophie** | Crée l'espace `Beta` | Dashboard vide — isolation multi-tenant |
+| 4 | **Jean** | 3 fichiers max (Free) → **Passer Premium** | Upload débloqué |
+
+```
+Jean   → Alpha (ALPHA1) → 1 fichier
+Lili   → Rejoint ALPHA1 → chat + téléchargement
+Sophie → Beta           → espace isolé
+Jean   → 3 fichiers max → Premium → illimité
+```
+
+Voir aussi [`demo.txt`](demo.txt) pour le script complet.
+
+---
+
+## Installation locale
+
+### Prérequis
+
+- PHP 8.2+
+- Composer
+- Extension SQLite (ou PostgreSQL)
+
+### Étapes
+
+```bash
+# Cloner le projet
+git clone https://github.com/votre-user/saas-share.git
+cd saas-share
+
+# Dépendances
+composer install
+
+# Configuration
+cp .env.example .env
+php artisan key:generate
+
+# Base de données (SQLite par défaut)
+touch database/database.sqlite
+php artisan migrate
+
+# Lancer le serveur
+php artisan serve
+```
+
+Ouvrir [http://localhost:8000](http://localhost:8000)
+
+---
+
+## Déploiement Docker (Render)
+
+Le projet inclut un `Dockerfile` prêt pour la production :
+
+```bash
+docker build -t saas-share .
+docker run -p 80:80 \
+  -e APP_KEY=base64:... \
+  -e APP_ENV=production \
+  -e DATABASE_URL=postgresql://... \
+  saas-share
+```
+
+Au démarrage, le conteneur exécute automatiquement les migrations et met en cache la config.
+
+**Variables d'environnement clés (Render)**
+
+| Variable | Description |
+|----------|-------------|
+| `APP_KEY` | Clé Laravel (`php artisan key:generate --show`) |
+| `APP_ENV` | `production` |
+| `APP_URL` | URL publique de l'app |
+| `DATABASE_URL` | Connexion PostgreSQL fournie par Render |
+
+---
+
+## Structure du projet
+
+```
+app/
+├── Http/Controllers/
+│   ├── Auth/          # Login, inscription (create / join workspace)
+│   └── DashboardController.php
+├── Models/
+│   ├── User.php
+│   ├── Workspace.php
+│   ├── File.php
+│   └── Message.php
+resources/views/
+├── auth/              # login, register
+├── dashboard.blade.php
+└── layouts/app.blade.php
+database/migrations/   # users, workspaces, files, messages
+```
+
+---
+
+## Routes principales
+
+| Méthode | Route | Description |
+|---------|-------|-------------|
+| `GET` | `/register` | Inscription |
+| `GET` | `/login` | Connexion |
+| `GET` | `/dashboard` | Tableau de bord |
+| `POST` | `/files` | Upload fichier |
+| `GET` | `/files/{id}/download` | Téléchargement |
+| `POST` | `/messages` | Envoyer un message |
+| `POST` | `/workspace/upgrade` | Passer Premium |
+| `POST` | `/profile/name` | Modifier le pseudo |
+
+---
+
+## Licence
+
+Projet open source sous licence [MIT](LICENSE).
+
+---
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  Développé avec Laravel · SaaS-Share © 2026
 </p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

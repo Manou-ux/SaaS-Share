@@ -1,0 +1,44 @@
+***********************************Scénario de démo complet — SaaS-Share***********************************
+
+SaaS-Share est une plateforme SaaS multi-tenant :
+
+Cette plateforme SaaS multi-tenant permet de créer des espaces de travail isolés, 
+de partager des fichiers et de communiquer en temps réel.
+
+
+#Fonctionnalités :
+- Création de compte et d'espaces & connexion
+- Invitation de membres et rejoindre un espace
+- Partage de fichiers
+- Chat d'espace en temps réel
+-Plan Free (3 fichiers par compte) / Premium (Upload illimité) :
+
+
+###################SCENARIO DE DEMO###################
+
+1. Jean crée Alpha
+- Inscription → Créer une entreprise → Nom : Alpha
+Noter le code généré (ex. ALPHA1)
+Uploader 1 fichier (~100 Ko)
+
+2. Lili rejoint Alpha
+Inscription → Rejoindre une équipe → Code : ALPHA1
+Elle voit le fichier de Jean, le télécharge
+Elle envoie un message dans le chat → Jean le voit
+
+3. Sophie crée Beta
+Inscription → Créer une entreprise → Nom : Beta
+Dashboard vide : aucune donnée d’Alpha (isolation multi-tenant)
+
+4. Limite Free + Premium
+Jean uploade 2 fichiers de plus (total : 3)
+Le 4ᵉ upload est bloqué (limite Free)
+Passer Premium → upload à nouveau possible
+
+
+
+#Résumé du scénario
+Chaque entreprise ou se que vous voulez a son espace de travail isolé (fichiers + chat). 
+Les utilisateurs peuvent créer un espace ou rejoindre une équipe via un code. 
+Le modèle freemium limite les uploads en plan Free, et le passage Premium débloque l’illimité.
+
