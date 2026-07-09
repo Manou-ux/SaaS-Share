@@ -198,7 +198,7 @@
                         <summary class="cursor-pointer select-none font-medium text-slate-900">Aide</summary>
                         <div class="mt-3 text-sm text-slate-700 space-y-3">
                             <div class="font-semibold text-slate-900">SCÉNARIO DE DÉMO AIDE</div>
-                            <div class="text-slate-600">Cette app permet de dérouler facilement ce scénario :</div>
+                            <div class="text-slate-600">Exemple de scenario pour comprendre le fonctionnement de cette plateforme SaaS :</div>
                             <ol class="list-decimal list-inside space-y-2">
                                 <li><span class="font-medium">Étape 1</span> : Inscription de Jean qui crée l'espace "<span class="font-medium">Alpha</span>" (génère le code <span class="font-medium">ALPHA1</span>) et uploade un fichier de <span class="font-medium">100 Ko</span>.</li>
                                 <li><span class="font-medium">Étape 2</span> : Inscription de Lili qui rejoint l'espace "<span class="font-medium">Alpha</span>" avec le code <span class="font-medium">ALPHA1</span>. Elle voit le fichier de Jean, le télécharge, et lui écrit un message dans le chat. Jean voit le message.</li>
