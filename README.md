@@ -200,7 +200,7 @@ database/migrations/   # users, workspaces, files, messages
 
 ## Licence
 
-Projet open source sous licence [MIT](LICENSE).
+Projet open source
 
 ---
 
