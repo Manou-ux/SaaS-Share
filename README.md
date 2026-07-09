@@ -52,20 +52,18 @@ flowchart LR
 
 - **Backend** — Laravel 12, PHP 8.2
 - **Frontend** — Blade + Tailwind CSS (CDN)
-- **Base de données** — SQLite (local) / PostgreSQL (production Render)
+- **Base de données** — PostgreSQL (local via pgAdmin 4 + production Render)
 - **Déploiement** — Docker + Render
 
 ---
 
 ## Démo en ligne
 
-> Remplacez l'URL ci-dessous par votre lien Render.
-
-**[https://votre-app.onrender.com](https://votre-app.onrender.com)**
+**[https://saas-share.onrender.com](https://saas-share.onrender.com)**
 
 ---
 
-## Scénario de démo (10 min)
+## Exemple de Scénario de démo 
 
 | Étape | Persona | Action | Résultat attendu |
 |-------|---------|--------|------------------|
@@ -89,11 +87,19 @@ Voir aussi [`demo.txt`](demo.txt) pour le script complet.
 
 ### Prérequis
 
-- PHP 8.2+
+- PHP 8.2+ avec extension `pdo_pgsql`
 - Composer
-- Extension SQLite (ou PostgreSQL)
+- PostgreSQL
+- [pgAdmin 4](https://www.pgadmin.org/) (gestion de la base en local)
 
-### Étapes
+### 1. Créer la base dans pgAdmin 4
+
+1. Ouvrir **pgAdmin 4**
+2. Se connecter au serveur PostgreSQL local
+3. Clic droit sur **Databases** → **Create** → **Database…**
+4. Nom : `saas_share` → **Save**
+
+### 2. Configurer le projet
 
 ```bash
 # Cloner le projet
@@ -106,12 +112,23 @@ composer install
 # Configuration
 cp .env.example .env
 php artisan key:generate
+```
 
-# Base de données (SQLite par défaut)
-touch database/database.sqlite
+Dans `.env`, configurer PostgreSQL :
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=saas_share
+DB_USERNAME=postgres
+DB_PASSWORD=votre_mot_de_passe
+```
+
+### 3. Migrations et lancement
+
+```bash
 php artisan migrate
-
-# Lancer le serveur
 php artisan serve
 ```
 
