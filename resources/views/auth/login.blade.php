@@ -12,12 +12,12 @@
 
         <label class="block">
             <span class="text-sm font-medium text-slate-700">Email</span>
-            <input type="email" name="email" value="{{ old('email') }}" required class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+            <input type="email" name="email" value="{{ old('email') }}" required class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
         </label>
 
         <label class="block">
             <span class="text-sm font-medium text-slate-700">Mot de passe</span>
-            <input type="password" name="password" required class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+            <input type="password" name="password" required class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
         </label>
 
         <div class="flex items-center justify-between text-sm text-slate-600">

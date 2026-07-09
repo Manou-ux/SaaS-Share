@@ -13,24 +13,24 @@
         <div class="grid gap-4 sm:grid-cols-2">
             <label class="block">
                 <span class="text-sm font-medium text-slate-700">Nom</span>
-                <input type="text" name="name" value="{{ old('name') }}" required class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+                <input type="text" name="name" value="{{ old('name') }}" required class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
             </label>
 
             <label class="block">
                 <span class="text-sm font-medium text-slate-700">Email</span>
-                <input type="email" name="email" value="{{ old('email') }}" required class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+                <input type="email" name="email" value="{{ old('email') }}" required class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
             </label>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-2">
             <label class="block">
                 <span class="text-sm font-medium text-slate-700">Mot de passe</span>
-                <input type="password" name="password" required class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+                <input type="password" name="password" required class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
             </label>
 
             <label class="block">
                 <span class="text-sm font-medium text-slate-700">Confirmation</span>
-                <input type="password" name="password_confirmation" required class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+                <input type="password" name="password_confirmation" required class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
             </label>
         </div>
 
@@ -48,7 +48,7 @@
         <div id="create-company" class="space-y-4">
             <label class="block">
                 <span class="text-sm font-medium text-slate-700">Nom de l'entreprise</span>
-                <input type="text" name="workspace_name" value="{{ old('workspace_name') }}" class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+                <input type="text" name="workspace_name" value="{{ old('workspace_name') }}" class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
             </label>
             <p class="text-sm text-slate-500">Un code unique sera généré pour inviter votre équipe (ex : ALPHA1).</p>
         </div>
@@ -56,7 +56,7 @@
         <div id="join-team" class="hidden space-y-4">
             <label class="block">
                 <span class="text-sm font-medium text-slate-700">Code de l'équipe</span>
-                <input type="text" name="workspace_code" value="{{ old('workspace_code') }}" class="mt-1 block w-full rounded border-slate-300 shadow-sm" />
+                <input type="text" name="workspace_code" value="{{ old('workspace_code') }}" class="mt-1 block w-full rounded border border-slate-300 bg-white p-2 shadow-sm transition hover:border-slate-400 hover:ring-1 hover:ring-slate-200 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20" />
             </label>
             <p class="text-sm text-slate-500">Rejoignez un espace déjà existant avec le code d'invitation.</p>
         </div>
