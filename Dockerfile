@@ -33,4 +33,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 
 # Script de démarrage pour vider les caches et lancer Apache
-CMD php artisan config:cache && php artisan route:cache && apache2-foreground
+CMD php artisan migrate --force && php artisan config:cache && php artisan route:cache && apache2-foreground
